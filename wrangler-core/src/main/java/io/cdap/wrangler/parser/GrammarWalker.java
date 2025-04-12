@@ -17,7 +17,8 @@
 package io.cdap.wrangler.parser;
 
 import io.cdap.wrangler.api.parser.Token;
-
+import io.cdap.wrangler.parser.DirectivesParser;
+import io.cdap.wrangler.parser.DirectivesParser.*;
 // import wrangler-api.src.main.java.io.cdap.wrangler.api.parser.Token;
 import io.cdap.wrangler.api.CompileException;
 import io.cdap.wrangler.api.CompileStatus;
