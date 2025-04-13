@@ -64,8 +64,6 @@ directive
     | stringList
     | numberRanges
     | properties
-    | byteSizeLiteral
-    | timeDurationLiteral
   )*?
   ;
 
@@ -142,12 +140,8 @@ numberRange
  ;
 
 value
- : String | Number | Column | Bool | BYTE_SIZE | TIME_DURATION | byteSizeLiteral | timeDurationLiteral
+ : String | Number | Column | Bool | BYTE_SIZE | TIME_DURATION
  ;
-
- // add parser rules for byte/time literals
- byteSizeLiteral:BYTE_SIZE;
- timeDurationLiteral:TIME_DURATION;
 
 ecommand
  : '!' Identifier
@@ -259,18 +253,6 @@ Bool
  | 'false'
  ;
 
-fragment BYTE_UNIT: [Kk][Bb] | [Mm][Bb] | [Gg][Bb] | [Tt][Bb]; 
-fragment TIME_UNIT: [Mm][Ss] | [Ss] | [Mm] | [Hh] | [Dd];      
-
-// Lexer tokens for byte sizes and time durations
-BYTE_SIZE
-  : [0-9]+ ('.' [0-9]+)? BYTE_UNIT
-  ;
-
-TIME_DURATION
-  : [0-9]+ ('.' [0-9]+)? TIME_UNIT
-  ;
-
 Number
  : Int ('.' Digit*)?
  ;
@@ -330,3 +312,18 @@ fragment Digit
  : [0-9]
  ;
 
+BYTE_SIZE
+ : Digit BYTE_UNIT
+ ;
+
+fragment BYTE_UNIT
+ : 'B' | 'KB' | 'MB' | 'GB' | 'TB'
+ ;
+
+TIME_DURATION
+ : Digit TIME_UNIT
+ ;
+
+fragment TIME_UNIT
+ : 's' | 'ms' | 'us' | 'ns' | 'm' | 'h' | 'd'
+ ;
