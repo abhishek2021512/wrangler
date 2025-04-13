@@ -164,6 +164,23 @@ These directives are currently available:
 | [JSON](wrangler-docs/functions/json-functions.md)                               | Functions that can be useful in transforming your data           |
 | [Types](wrangler-docs/functions/type-functions.md)                              | Functions for detecting the type of data                         |
 
+## Parsing Byte Size and Time Duration Units
+
+The CDAP Wrangler library now supports native parsing of **byte size** (e.g., KB, MB, GB) and **time duration** (e.g., ms, s, min) units, making it easier to handle data sizes and time intervals in your recipes. These parsers enable seamless conversions, calculations, and aggregations without complex multi-step transformations.
+
+### Supported Units
+- **Byte Size**: Recognizes units like `B` (bytes), `KB` (kilobytes), `MB` (megabytes), `GB` (gigabytes), and `TB` (terabytes). Case-insensitive.
+  - Example: `100 KB`, `1.5 MB`, `2 GB`
+- **Time Duration**: Recognizes units like `ms` (milliseconds), `s` (seconds), `min` (minutes), and `h` (hours). Case-insensitive.
+  - Example: `500 ms`, `3 s`, `1.5 min`, `2 h`
+
+### Usage in Recipes
+You can use byte size and time duration units in Wrangler directives that accept numerical arguments, such as filtering, transformations, or the new `aggregate-stats` directive. The parser automatically interprets these units and converts them to a base unit (bytes for sizes, milliseconds for durations) for calculations.
+
+#### Examples
+1. **Filtering Rows by File Size**
+   Filter rows where a column `file_size` is greater than 1 megabyte:
+
 ## Performance
 
 Initial performance tests show that with a set of directives of high complexity for
